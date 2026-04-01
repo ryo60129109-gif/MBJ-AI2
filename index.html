@@ -28,7 +28,6 @@
             <div class="h-2 w-32 bg-gold mx-auto mb-8"></div>
             <p class="text-xl md:text-2xl text-blue-100 font-medium text-balance">最短で成果を出すための導入フロー ＆ AI執筆アシスタント</p>
         </div>
-        <!-- 装飾 -->
         <div class="absolute top-0 right-0 w-64 h-64 bg-gold opacity-10 rounded-full -mr-32 -mt-32"></div>
         <div class="absolute bottom-0 left-0 w-48 h-48 bg-blue-400 opacity-10 rounded-full -ml-24 -mb-24"></div>
     </header>
@@ -60,7 +59,6 @@
                         <i class="fa-solid fa-sparkles"></i>
                     </button>
                     
-                    <!-- Result Area -->
                     <div id="hpResultContainer" class="mt-10 hidden animate-fade-in">
                         <div class="flex justify-between items-center mb-3">
                             <span class="font-black text-amber-800 text-xl flex items-center">
@@ -94,7 +92,7 @@
                         <p class="text-lg font-black text-red-600 underline decoration-2 underline-offset-4">登録後、必ず「フルネーム」を送信してください。</p>
                     </div>
                     <div class="w-full md:w-80 shrink-0">
-                        <a href="https://lin.ee/uHxvRRk" target="_blank" class="block bg-green-500 text-white text-center py-5 rounded-2xl font-black text-xl hover:bg-green-600 transition-all shadow-lg active:scale-95">公式LINE追加</a>
+                        <a href="https://lin.ee/uHxvRRk" target="_blank" class="block bg-green-500 text-white text-center py-6 rounded-2xl font-black text-xl hover:bg-green-600 transition-all shadow-lg active:scale-95">公式LINE追加</a>
                     </div>
                 </div>
             </div>
@@ -150,7 +148,7 @@
     <div id="modal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50 p-4 backdrop-blur-md">
         <div class="bg-white rounded-[2.5rem] p-10 max-w-md w-full shadow-2xl animate-fade-in">
             <h3 id="modalTitle" class="text-2xl font-black mb-4 text-gray-900 tracking-tight"></h3>
-            <p id="modalMsg" class="text-xl text-gray-600 mb-10 leading-relaxed"></p>
+            <p id="modalMsg" class="text-xl text-gray-600 mb-10 leading-relaxed overflow-auto max-h-60"></p>
             <button onclick="closeModal()" class="w-full bg-navy text-white py-5 rounded-2xl font-black text-xl hover:brightness-125 transition-all shadow-lg">閉じる</button>
         </div>
     </div>
@@ -217,7 +215,8 @@
                 }
             } catch (error) {
                 console.error(error);
-                showModal("エラー", "現在AI機能を利用できません。管理者までお問い合わせください。");
+                // エラーの詳細をダイアログに表示するように修正
+                showModal("エラーが発生しました", "詳細: " + error.message + "\n\n※APIキーの制限や、モデル名(1.5-flash)が現在のキーで許可されているか確認してください。");
             } finally {
                 btn.innerHTML = originalBtnText;
                 btn.disabled = false;
@@ -225,7 +224,10 @@
         }
 
         async function callGemini(userQuery, systemPrompt, retries = 5) {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            // モデル名を一般的に利用可能な 'gemini-1.5-flash' に変更
+            const modelName = "gemini-1.5-flash";
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+            
             const payload = {
                 contents: [{ parts: [{ text: userQuery }] }],
                 systemInstruction: { parts: [{ text: systemPrompt }] }
@@ -239,12 +241,18 @@
                         body: JSON.stringify(payload)
                     });
                     
-                    if (!response.ok) throw new Error('API Error');
-                    
                     const result = await response.json();
+
+                    if (!response.ok) {
+                        // API側からのエラーメッセージを抽出
+                        const errorMsg = result.error ? result.error.message : '不明なエラー';
+                        throw new Error(`[Status ${response.status}] ${errorMsg}`);
+                    }
+                    
                     return result.candidates?.[0]?.content?.parts?.[0]?.text;
                 } catch (error) {
                     if (i === retries - 1) throw error;
+                    // 指数バックオフ
                     await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
                 }
             }
