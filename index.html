@@ -148,7 +148,7 @@
     <div id="modal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50 p-4 backdrop-blur-md">
         <div class="bg-white rounded-[2.5rem] p-10 max-w-md w-full shadow-2xl animate-fade-in">
             <h3 id="modalTitle" class="text-2xl font-black mb-4 text-gray-900 tracking-tight"></h3>
-            <p id="modalMsg" class="text-xl text-gray-600 mb-10 leading-relaxed overflow-auto max-h-60"></p>
+            <p id="modalMsg" class="text-xl text-gray-600 mb-10 leading-relaxed overflow-auto max-h-80 whitespace-pre-wrap"></p>
             <button onclick="closeModal()" class="w-full bg-navy text-white py-5 rounded-2xl font-black text-xl hover:brightness-125 transition-all shadow-lg">閉じる</button>
         </div>
     </div>
@@ -215,8 +215,8 @@
                 }
             } catch (error) {
                 console.error(error);
-                // エラーの詳細をダイアログに表示するように修正
-                showModal("エラーが発生しました", "詳細: " + error.message + "\n\n※APIキーの制限や、モデル名(1.5-flash)が現在のキーで許可されているか確認してください。");
+                // エラーの詳細をダイアログに表示
+                showModal("通信エラーが発生しました", "【詳細メッセージ】\n" + error.message + "\n\n【解決策】\n・APIキーに制限がかかっていないか確認してください\n・Google Cloud Consoleで'Generative Language API'が有効化されているか確認してください");
             } finally {
                 btn.innerHTML = originalBtnText;
                 btn.disabled = false;
@@ -224,13 +224,19 @@
         }
 
         async function callGemini(userQuery, systemPrompt, retries = 5) {
-            // モデル名を一般的に利用可能な 'gemini-1.5-flash' に変更
-            const modelName = "gemini-1.5-flash";
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+            // モデル名とエンドポイントを最新の安定版に固定
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
             
             const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                systemInstruction: { parts: [{ text: systemPrompt }] }
+                contents: [
+                    {
+                        role: "user",
+                        parts: [{ text: userQuery }]
+                    }
+                ],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                }
             };
 
             for (let i = 0; i < retries; i++) {
@@ -244,15 +250,19 @@
                     const result = await response.json();
 
                     if (!response.ok) {
-                        // API側からのエラーメッセージを抽出
-                        const errorMsg = result.error ? result.error.message : '不明なエラー';
-                        throw new Error(`[Status ${response.status}] ${errorMsg}`);
+                        // API側からの具体的なエラーメッセージを抽出
+                        const errorDetail = result.error ? result.error.message : 'Unknown API error';
+                        throw new Error(`[Status ${response.status}] ${errorDetail}`);
                     }
                     
-                    return result.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (result.candidates && result.candidates[0] && result.candidates[0].content) {
+                        return result.candidates[0].content.parts[0].text;
+                    } else {
+                        throw new Error("AIからの回答が空でした。内容を変えて試してください。");
+                    }
                 } catch (error) {
                     if (i === retries - 1) throw error;
-                    // 指数バックオフ
+                    // 指数バックオフ（リトライ）
                     await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
                 }
             }
