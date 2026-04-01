@@ -32,7 +32,7 @@
         <div class="absolute bottom-0 left-0 w-48 h-48 bg-blue-400 opacity-10 rounded-full -ml-24 -mb-24"></div>
     </header>
 
-    <main class="max-w-5xl mx-auto px-4 -mt-10 pb-24">
+    <main class="max-w-5xl mx-auto px-4 -mt-10 pb-24 text-balance">
         
         <!-- AI Assistant Section -->
         <section class="bg-white rounded-[2.5rem] p-8 md:p-14 mb-14 shadow-2xl border-t-[12px] border-gold relative overflow-hidden">
@@ -43,7 +43,7 @@
                 <h2 class="text-3xl md:text-4xl font-black text-gray-800">HP作成・自己紹介文支援AI</h2>
             </div>
 
-            <p class="text-xl text-gray-600 mb-10 leading-relaxed">
+            <p class="text-xl text-gray-600 mb-10 leading-relaxed text-balance">
                 ホームページの「院の紹介」や「プロフィール」の文章作成をAIがお手伝いします。箇条書きで特徴を入力するだけで、誠実な文章を数秒で構成します。
             </p>
 
@@ -60,8 +60,8 @@
                         <i class="fa-solid fa-sparkles"></i>
                     </button>
 
-                    <!-- 診断ログ表示（トラブルシューティング用） -->
-                    <div id="debugLog" class="mt-4 p-4 bg-slate-100 text-slate-700 text-sm font-mono border border-slate-300 rounded-xl hidden overflow-auto max-h-40">
+                    <!-- 診断ログ（トラブル時のみ表示） -->
+                    <div id="debugLog" class="mt-4 p-4 bg-slate-100 text-slate-700 text-xs font-mono border border-slate-300 rounded-xl hidden overflow-auto max-h-40">
                         <strong>[診断ログ]</strong><br>
                         <span id="logContent"></span>
                     </div>
@@ -78,7 +78,7 @@
                         </div>
                         <div id="hpResult" class="p-8 bg-white rounded-3xl border-2 border-amber-100 text-gray-800 text-xl whitespace-pre-wrap leading-relaxed shadow-xl min-h-[150px]"></div>
                         <p class="mt-6 text-gray-400 text-center font-bold italic">
-                            ※この文章をコピーして、STEP 04 のフォームへ貼り付けてください。
+                            ※この文章をコピーして、Step 04 のフォームへ貼り付けてください。
                         </p>
                     </div>
                 </div>
@@ -86,71 +86,75 @@
         </section>
 
         <!-- Steps -->
-        <div class="space-y-12 mb-24">
-            <h2 class="text-4xl font-black text-center text-gray-800 mb-14 tracking-tighter">導入スケジュール (Step 01 - 05)</h2>
+        <div class="space-y-12 mb-24 text-balance">
+            <h2 class="text-4xl font-black text-center text-gray-800 mb-14 tracking-tighter">導入スケジュール</h2>
 
+            <!-- STEP 01 -->
             <div class="bg-white rounded-[2rem] p-10 shadow-xl border-l-[20px] border-green-600 group hover:translate-x-2 transition-transform duration-300">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-8">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-8 text-balance">
                     <div class="flex-1">
-                        <span class="bg-green-600 text-white px-5 py-1 rounded-full font-black text-sm mb-4 inline-block tracking-widest">STEP 01</span>
+                        <span class="bg-green-600 text-white px-5 py-1 rounded-full font-black text-sm mb-4 inline-block tracking-widest uppercase font-mono">Step 01</span>
                         <h3 class="text-3xl font-black text-gray-800 mb-4">事務局公式LINEの追加</h3>
                         <p class="text-xl text-gray-600 mb-2 leading-relaxed">全ての制作・連絡の窓口です。登録後、必ず「フルネーム」を送信してください。</p>
                     </div>
                     <div class="w-full md:w-80 shrink-0">
-                        <a href="https://lin.ee/uHxvRRk" target="_blank" class="block bg-green-500 text-white text-center py-5 rounded-2xl font-black text-xl hover:bg-green-600 transition-all shadow-lg active:scale-95">公式LINE追加</a>
+                        <a href="https://lin.ee/uHxvRRk" target="_blank" class="block bg-green-500 text-white text-center py-6 rounded-2xl font-black text-xl hover:bg-green-600 transition-all shadow-lg active:scale-95">公式LINE追加</a>
                     </div>
                 </div>
             </div>
 
+            <!-- STEP 02 & 03 -->
             <div class="grid md:grid-cols-2 gap-10">
                 <div class="bg-white rounded-[2rem] p-10 shadow-xl border-b-[12px] border-gold text-center hover:-translate-y-2 transition-transform duration-300">
-                    <span class="bg-gold text-white px-5 py-1 rounded-full font-black text-sm mb-4 inline-block">STEP 02</span>
+                    <span class="bg-gold text-white px-5 py-1 rounded-full font-black text-sm mb-4 inline-block font-mono uppercase">Step 02</span>
                     <h3 class="text-2xl font-black text-gray-800 mb-6">Googleマップ登録</h3>
                     <a href="https://www.creal.co.jp/column/meo/" target="_blank" class="inline-block text-blue-600 font-black text-xl hover:text-navy underline underline-offset-8">登録方法を確認</a>
                 </div>
                 <div class="bg-white rounded-[2rem] p-10 shadow-xl border-b-[12px] border-gold text-center hover:-translate-y-2 transition-transform duration-300">
-                    <span class="bg-gold text-white px-5 py-1 rounded-full font-black text-sm mb-4 inline-block">STEP 03</span>
+                    <span class="bg-gold text-white px-5 py-1 rounded-full font-black text-sm mb-4 inline-block font-mono uppercase">Step 03</span>
                     <h3 class="text-2xl font-black text-gray-800 mb-6">自院LINEの運用</h3>
                     <a href="https://www.linebiz.com/jp/column/technique/" target="_blank" class="inline-block text-blue-600 font-black text-xl hover:text-navy underline underline-offset-8">活用ガイドを確認</a>
                 </div>
             </div>
 
+            <!-- STEP 04 -->
             <div class="bg-white rounded-[2rem] p-10 shadow-xl border-l-[20px] border-indigo-700 group hover:translate-x-2 transition-transform duration-300">
-                <span class="bg-indigo-700 text-white px-5 py-1 rounded-full font-black text-sm mb-4 inline-block tracking-widest">STEP 04</span>
+                <span class="bg-indigo-700 text-white px-5 py-1 rounded-full font-black text-sm mb-4 inline-block tracking-widest font-mono uppercase">Step 04</span>
                 <h3 class="text-3xl font-black text-gray-800 mb-6 tracking-tight">ホームページ作成フォーム入力</h3>
-                <a href="https://forms.gle/FpibsmJnu1YRHmqh8" target="_blank" class="block w-full bg-indigo-700 text-white text-center py-7 rounded-2xl font-black text-3xl hover:bg-indigo-800 transition-all shadow-xl active:scale-95">HP制作を依頼する</a>
+                <a href="https://forms.gle/FpibsmJnu1YRHmqh8" target="_blank" class="block w-full bg-indigo-700 text-white text-center py-7 rounded-2xl font-black text-2xl hover:bg-indigo-800 transition-all shadow-xl active:scale-95">HP制作を依頼する</a>
             </div>
 
+            <!-- STEP 05 -->
             <div class="bg-slate-200/50 rounded-[2rem] p-12 text-center border-4 border-dashed border-slate-300">
-                <span class="bg-slate-400 text-white px-5 py-1 rounded-full font-black text-sm mb-4 inline-block">STEP 05</span>
+                <span class="bg-slate-400 text-white px-5 py-1 rounded-full font-black text-sm mb-4 inline-block font-mono uppercase">Step 05</span>
                 <h3 class="text-3xl font-black text-slate-500 tracking-widest uppercase">納品をお待ちください</h3>
             </div>
         </div>
 
-        <footer class="bg-navy text-white rounded-[3rem] p-12 md:p-16 text-center shadow-2xl relative overflow-hidden text-balance">
+        <footer class="bg-navy text-white rounded-[3rem] p-12 md:p-16 text-center shadow-2xl relative overflow-hidden">
             <h2 class="text-4xl font-black mb-8 text-gold tracking-tight">困ったときは？</h2>
-            <div class="flex justify-center relative z-10">
-                <a href="https://lin.ee/uHxvRRk" target="_blank" class="bg-gold text-navy font-black px-20 py-7 rounded-full text-3xl hover:scale-105 transition-all shadow-2xl active:scale-95 flex items-center gap-4">
+            <div class="flex justify-center relative z-10 text-balance">
+                <a href="https://lin.ee/uHxvRRk" target="_blank" class="bg-gold text-navy font-black px-20 py-7 rounded-full text-2xl hover:scale-105 transition-all shadow-2xl active:scale-95 flex items-center gap-4">
                     <i class="fa-brands fa-line text-4xl"></i>
                     <span>LINEで相談</span>
                 </a>
             </div>
-            <p class="mt-16 text-blue-300/50 font-black tracking-[0.3em] text-sm uppercase italic">Medical Book Japan All Rights Reserved.</p>
+            <p class="mt-16 text-blue-300/50 font-black tracking-[0.3em] text-xs uppercase italic">Medical Book Japan All Rights Reserved.</p>
         </footer>
     </main>
 
     <!-- Modal -->
     <div id="modal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50 p-4 backdrop-blur-md">
-        <div class="bg-white rounded-[2.5rem] p-10 max-w-md w-full shadow-2xl animate-fade-in">
+        <div class="bg-white rounded-[2.5rem] p-10 max-w-md w-full shadow-2xl animate-fade-in text-balance">
             <h3 id="modalTitle" class="text-2xl font-black mb-4 text-gray-900 tracking-tight"></h3>
-            <p id="modalMsg" class="text-xl text-gray-600 mb-10 leading-relaxed overflow-auto max-h-80 whitespace-pre-wrap"></p>
+            <p id="modalMsg" class="text-lg text-gray-600 mb-10 leading-relaxed overflow-auto max-h-80 whitespace-pre-wrap"></p>
             <button onclick="closeModal()" class="w-full bg-navy text-white py-5 rounded-2xl font-black text-xl hover:brightness-125 transition-all shadow-lg">閉じる</button>
         </div>
     </div>
 
     <script>
-        // APIキー（管理者設定済）
-        const apiKey = "AIzaSyAu6XKq65GwBX9DcxGNYrMeMStZ-U-VQHI"; 
+        // 管理者があらかじめ設定するAPIキー
+        const apiKey = "AIzaSyChFoXM5aGE4rnbzvEH17BvhzujPw-x-Rk"; 
 
         function addLog(msg) {
             const debugLog = document.getElementById('debugLog');
@@ -168,9 +172,9 @@
             temp.select();
             try {
                 document.execCommand('copy');
-                showModal("完了", "文章をコピーしました！");
+                showModal("完了", "文章をコピーしました！ そのままフォームへ貼り付けてください。");
             } catch (err) {
-                showModal("エラー", "手動で選択してコピーしてください。");
+                showModal("コピー失敗", "手動で選択してコピーしてください。");
             }
             document.body.removeChild(temp);
         }
@@ -195,11 +199,10 @@
             const resultDiv = document.getElementById(type + 'Result');
             const container = document.getElementById(type + 'ResultContainer');
             const logContent = document.getElementById('logContent');
-            
-            logContent.innerHTML = ""; // ログリセット
+            logContent.innerHTML = ""; 
 
             if (!input.trim()) {
-                showModal("入力不足", "内容を入力してください。");
+                showModal("入力不足", "あなたの経歴や院の強みをいくつか入力してください。");
                 return;
             }
 
@@ -208,32 +211,37 @@
             btn.disabled = true;
             container.classList.add('hidden');
 
-            const prompt = `あなたは治療家専門のライターです。以下のキーワードを元に、院の信頼感が高まる300文字程度の紹介文を書いてください。\n入力内容: ${input}`;
+            const prompt = `あなたは治療家専門のプロライターです。以下の情報を元に、誠実で患者さんの心に響く紹介文を400文字程度で執筆してください。情報: ${input}`;
 
             try {
-                addLog("接続準備完了 (v1beta/gemini-1.5-flash)...");
-                const text = await callGemini(prompt);
+                // v1beta エンドポイントを使用して生成
+                const model = "gemini-1.5-flash";
+                addLog(`${model} で接続を試みています...`);
                 
+                const text = await callGemini(prompt, model);
+
                 if (text) {
-                    addLog("成功！回答を受信しました。");
+                    addLog("通信成功！回答を表示します");
                     resultDiv.textContent = text;
                     container.classList.remove('hidden');
                     setTimeout(() => {
                         container.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }, 100);
+                } else {
+                    throw new Error("AIからの回答が空でした。");
                 }
             } catch (error) {
-                addLog(`エラー詳細: ${error.message}`);
-                showModal("通信エラーが発生しました", "【詳細】\n" + error.message);
+                console.error(error);
+                showModal("通信エラー", "詳細: " + error.message + "\n\n※Google Cloud Consoleのトライアル有効化を確認してください。");
             } finally {
                 btn.innerHTML = originalBtnText;
                 btn.disabled = false;
             }
         }
 
-        async function callGemini(fullPrompt) {
-            // v1beta を使用し、モデル名を指定
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+        async function callGemini(fullPrompt, modelName) {
+            // v1beta エンドポイントを使用
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
             
             const payload = {
                 contents: [{
@@ -247,12 +255,11 @@
                 body: JSON.stringify(payload)
             });
             
-            addLog(`レスポンス: ${response.status} ${response.statusText}`);
             const result = await response.json();
 
             if (!response.ok) {
                 const msg = result.error ? result.error.message : 'Unknown API error';
-                throw new Error(`[API Status ${response.status}] ${msg}`);
+                throw new Error(`[Status ${response.status}] ${msg}`);
             }
             
             return result.candidates?.[0]?.content?.parts?.[0]?.text;
