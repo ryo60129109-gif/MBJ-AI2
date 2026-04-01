@@ -55,19 +55,17 @@
                     </div>
                     <textarea id="hpInput" class="w-full p-6 rounded-2xl border-2 border-slate-200 focus:border-amber-600 focus:ring-0 text-lg mb-6 shadow-sm" rows="5" placeholder="例：柔道整復師、歴10年、自分も腰痛で悩んだ経験がある、地域で一番話しやすい院を目指している、ボキボキしないソフトな施術"></textarea>
                     
-                    <!-- 生成ボタン -->
                     <button onclick="generateContent('hp')" id="hpBtn" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-black py-6 rounded-2xl text-2xl transition-all shadow-xl active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3">
                         <span>プロフィール文を生成する</span>
                         <i class="fa-solid fa-sparkles"></i>
                     </button>
 
-                    <!-- エラーログ表示（デバッグ用） -->
-                    <div id="debugLog" class="mt-4 p-4 bg-red-50 text-red-700 text-sm font-mono border border-red-200 rounded-xl hidden overflow-auto max-h-40">
+                    <!-- 診断ログ表示（トラブルシューティング用） -->
+                    <div id="debugLog" class="mt-4 p-4 bg-slate-100 text-slate-700 text-sm font-mono border border-slate-300 rounded-xl hidden overflow-auto max-h-40">
                         <strong>[診断ログ]</strong><br>
                         <span id="logContent"></span>
                     </div>
                     
-                    <!-- 結果エリア -->
                     <div id="hpResultContainer" class="mt-10 hidden animate-fade-in">
                         <div class="flex justify-between items-center mb-3">
                             <span class="font-black text-amber-800 text-xl flex items-center">
@@ -91,7 +89,6 @@
         <div class="space-y-12 mb-24">
             <h2 class="text-4xl font-black text-center text-gray-800 mb-14 tracking-tighter">導入スケジュール (Step 01 - 05)</h2>
 
-            <!-- STEP 01 -->
             <div class="bg-white rounded-[2rem] p-10 shadow-xl border-l-[20px] border-green-600 group hover:translate-x-2 transition-transform duration-300">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-8">
                     <div class="flex-1">
@@ -100,12 +97,11 @@
                         <p class="text-xl text-gray-600 mb-2 leading-relaxed">全ての制作・連絡の窓口です。登録後、必ず「フルネーム」を送信してください。</p>
                     </div>
                     <div class="w-full md:w-80 shrink-0">
-                        <a href="https://lin.ee/uHxvRRk" target="_blank" class="block bg-green-500 text-white text-center py-6 rounded-2xl font-black text-xl hover:bg-green-600 transition-all shadow-lg active:scale-95">公式LINE追加</a>
+                        <a href="https://lin.ee/uHxvRRk" target="_blank" class="block bg-green-500 text-white text-center py-5 rounded-2xl font-black text-xl hover:bg-green-600 transition-all shadow-lg active:scale-95">公式LINE追加</a>
                     </div>
                 </div>
             </div>
 
-            <!-- STEP 02 & 03 -->
             <div class="grid md:grid-cols-2 gap-10">
                 <div class="bg-white rounded-[2rem] p-10 shadow-xl border-b-[12px] border-gold text-center hover:-translate-y-2 transition-transform duration-300">
                     <span class="bg-gold text-white px-5 py-1 rounded-full font-black text-sm mb-4 inline-block">STEP 02</span>
@@ -119,14 +115,12 @@
                 </div>
             </div>
 
-            <!-- STEP 04 -->
             <div class="bg-white rounded-[2rem] p-10 shadow-xl border-l-[20px] border-indigo-700 group hover:translate-x-2 transition-transform duration-300">
                 <span class="bg-indigo-700 text-white px-5 py-1 rounded-full font-black text-sm mb-4 inline-block tracking-widest">STEP 04</span>
                 <h3 class="text-3xl font-black text-gray-800 mb-6 tracking-tight">ホームページ作成フォーム入力</h3>
                 <a href="https://forms.gle/FpibsmJnu1YRHmqh8" target="_blank" class="block w-full bg-indigo-700 text-white text-center py-7 rounded-2xl font-black text-3xl hover:bg-indigo-800 transition-all shadow-xl active:scale-95">HP制作を依頼する</a>
             </div>
 
-            <!-- STEP 05 -->
             <div class="bg-slate-200/50 rounded-[2rem] p-12 text-center border-4 border-dashed border-slate-300">
                 <span class="bg-slate-400 text-white px-5 py-1 rounded-full font-black text-sm mb-4 inline-block">STEP 05</span>
                 <h3 class="text-3xl font-black text-slate-500 tracking-widest uppercase">納品をお待ちください</h3>
@@ -155,10 +149,9 @@
     </div>
 
     <script>
-        // APIキー
+        // APIキー（管理者設定済）
         const apiKey = "AIzaSyAu6XKq65GwBX9DcxGNYrMeMStZ-U-VQHI"; 
 
-        // デバッグ用ログ関数
         function addLog(msg) {
             const debugLog = document.getElementById('debugLog');
             const logContent = document.getElementById('logContent');
@@ -166,12 +159,6 @@
             logContent.innerHTML += `> ${msg}<br>`;
             console.log(msg);
         }
-
-        // グローバルエラーキャッチ
-        window.onerror = function(msg, url, line) {
-            addLog(`JSエラー: ${msg} (行:${line})`);
-            return false;
-        };
 
         function copyResult() {
             const text = document.getElementById('hpResult').textContent;
@@ -183,7 +170,7 @@
                 document.execCommand('copy');
                 showModal("完了", "文章をコピーしました！");
             } catch (err) {
-                showModal("エラー", "コピーに失敗しました。手動で選択してコピーしてください。");
+                showModal("エラー", "手動で選択してコピーしてください。");
             }
             document.body.removeChild(temp);
         }
@@ -203,85 +190,72 @@
         }
 
         async function generateContent(type) {
-            addLog("生成開始ボタンが押されました");
             const btn = document.getElementById(type + 'Btn');
             const input = document.getElementById(type + 'Input').value;
             const resultDiv = document.getElementById(type + 'Result');
             const container = document.getElementById(type + 'ResultContainer');
-            const debugLog = document.getElementById('debugLog');
             const logContent = document.getElementById('logContent');
-
-            logContent.innerHTML = ""; // ログをリセット
-            debugLog.classList.add('hidden');
+            
+            logContent.innerHTML = ""; // ログリセット
 
             if (!input.trim()) {
-                showModal("入力不足", "あなたの経歴や院の強みを入力してください。");
+                showModal("入力不足", "内容を入力してください。");
                 return;
             }
 
             const originalBtnText = btn.innerHTML;
-            btn.innerHTML = '<span>AIが文章を作成中</span><span class="loading-dots"></span>';
+            btn.innerHTML = '<span>AIが執筆中</span><span class="loading-dots"></span>';
             btn.disabled = true;
             container.classList.add('hidden');
 
-            const systemPrompt = "あなたは信頼感のある治療家専門のプロライターです。誠実で心に響く紹介文を300〜500文字程度で構成してください。";
+            const prompt = `あなたは治療家専門のライターです。以下のキーワードを元に、院の信頼感が高まる300文字程度の紹介文を書いてください。\n入力内容: ${input}`;
 
             try {
-                addLog("API通信を試みます...");
-                const text = await callGemini(input, systemPrompt);
+                addLog("接続準備完了 (v1beta/gemini-1.5-flash)...");
+                const text = await callGemini(prompt);
                 
                 if (text) {
-                    addLog("通信成功！回答を受信しました");
+                    addLog("成功！回答を受信しました。");
                     resultDiv.textContent = text;
                     container.classList.remove('hidden');
                     setTimeout(() => {
                         container.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }, 100);
-                } else {
-                    addLog("エラー: AIからの回答が空です");
-                    throw new Error("AIからの回答が空でした。");
                 }
             } catch (error) {
-                addLog(`エラー発生: ${error.message}`);
-                showModal("通信エラーが発生しました", "【内容】\n" + error.message + "\n\n※ボタン下の『診断ログ』を確認してください。");
+                addLog(`エラー詳細: ${error.message}`);
+                showModal("通信エラーが発生しました", "【詳細】\n" + error.message);
             } finally {
                 btn.innerHTML = originalBtnText;
                 btn.disabled = false;
             }
         }
 
-        async function callGemini(userQuery, systemPrompt) {
-            // 最も標準的な v1 エンドポイントを使用
-            const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+        async function callGemini(fullPrompt) {
+            // v1beta を使用し、モデル名を指定
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
             
             const payload = {
                 contents: [{
-                    parts: [{ text: `命令: ${systemPrompt}\n入力: ${userQuery}` }]
+                    parts: [{ text: fullPrompt }]
                 }]
             };
 
-            try {
-                addLog(`エンドポイント: ${url.split('?')[0]}`);
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                
-                addLog(`レスポンスステータス: ${response.status} ${response.statusText}`);
-                
-                const result = await response.json();
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            
+            addLog(`レスポンス: ${response.status} ${response.statusText}`);
+            const result = await response.json();
 
-                if (!response.ok) {
-                    const msg = result.error ? result.error.message : '不明なAPIエラー';
-                    throw new Error(`[APIエラー ${response.status}] ${msg}`);
-                }
-                
-                return result.candidates?.[0]?.content?.parts?.[0]?.text;
-            } catch (e) {
-                addLog(`Fetch失敗: ${e.message}`);
-                throw e;
+            if (!response.ok) {
+                const msg = result.error ? result.error.message : 'Unknown API error';
+                throw new Error(`[API Status ${response.status}] ${msg}`);
             }
+            
+            return result.candidates?.[0]?.content?.parts?.[0]?.text;
         }
     </script>
 </body>
