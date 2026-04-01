@@ -43,8 +43,8 @@
                 <h2 class="text-3xl md:text-4xl font-black text-gray-800">HP作成・自己紹介文支援AI</h2>
             </div>
 
-            <p class="text-xl text-gray-600 mb-12 leading-relaxed">
-                ホームページの「院の紹介」や「プロフィール」の文章作成をAIがお手伝いします。箇条書きであなたの特徴を入力するだけで、患者さんに響く誠実な文章を数秒で構成します。
+            <p class="text-xl text-gray-600 mb-10 leading-relaxed">
+                ホームページの「院の紹介」や「プロフィール」の文章作成をAIがお手伝いします。箇条書きで特徴を入力するだけで、誠実な文章を数秒で構成します。
             </p>
 
             <div class="max-w-3xl mx-auto">
@@ -54,11 +54,20 @@
                         <h3 class="text-2xl font-bold text-gray-800 tracking-tight">あなたの強みや想いを入力</h3>
                     </div>
                     <textarea id="hpInput" class="w-full p-6 rounded-2xl border-2 border-slate-200 focus:border-amber-600 focus:ring-0 text-lg mb-6 shadow-sm" rows="5" placeholder="例：柔道整復師、歴10年、自分も腰痛で悩んだ経験がある、地域で一番話しやすい院を目指している、ボキボキしないソフトな施術"></textarea>
+                    
+                    <!-- 生成ボタン -->
                     <button onclick="generateContent('hp')" id="hpBtn" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-black py-6 rounded-2xl text-2xl transition-all shadow-xl active:scale-95 disabled:opacity-50 flex items-center justify-center gap-3">
                         <span>プロフィール文を生成する</span>
                         <i class="fa-solid fa-sparkles"></i>
                     </button>
+
+                    <!-- エラーログ表示（デバッグ用） -->
+                    <div id="debugLog" class="mt-4 p-4 bg-red-50 text-red-700 text-sm font-mono border border-red-200 rounded-xl hidden overflow-auto max-h-40">
+                        <strong>[診断ログ]</strong><br>
+                        <span id="logContent"></span>
+                    </div>
                     
+                    <!-- 結果エリア -->
                     <div id="hpResultContainer" class="mt-10 hidden animate-fade-in">
                         <div class="flex justify-between items-center mb-3">
                             <span class="font-black text-amber-800 text-xl flex items-center">
@@ -88,8 +97,7 @@
                     <div class="flex-1">
                         <span class="bg-green-600 text-white px-5 py-1 rounded-full font-black text-sm mb-4 inline-block tracking-widest">STEP 01</span>
                         <h3 class="text-3xl font-black text-gray-800 mb-4">事務局公式LINEの追加</h3>
-                        <p class="text-xl text-gray-600 mb-2 leading-relaxed">全ての制作・連絡の窓口です。まずはここから始まります。</p>
-                        <p class="text-lg font-black text-red-600 underline decoration-2 underline-offset-4">登録後、必ず「フルネーム」を送信してください。</p>
+                        <p class="text-xl text-gray-600 mb-2 leading-relaxed">全ての制作・連絡の窓口です。登録後、必ず「フルネーム」を送信してください。</p>
                     </div>
                     <div class="w-full md:w-80 shrink-0">
                         <a href="https://lin.ee/uHxvRRk" target="_blank" class="block bg-green-500 text-white text-center py-6 rounded-2xl font-black text-xl hover:bg-green-600 transition-all shadow-lg active:scale-95">公式LINE追加</a>
@@ -102,13 +110,11 @@
                 <div class="bg-white rounded-[2rem] p-10 shadow-xl border-b-[12px] border-gold text-center hover:-translate-y-2 transition-transform duration-300">
                     <span class="bg-gold text-white px-5 py-1 rounded-full font-black text-sm mb-4 inline-block">STEP 02</span>
                     <h3 class="text-2xl font-black text-gray-800 mb-6">Googleマップ登録</h3>
-                    <p class="text-gray-600 mb-8 text-lg">MEO対策に必須です。未登録の方はこちらをご参照ください。</p>
                     <a href="https://www.creal.co.jp/column/meo/" target="_blank" class="inline-block text-blue-600 font-black text-xl hover:text-navy underline underline-offset-8">登録方法を確認</a>
                 </div>
                 <div class="bg-white rounded-[2rem] p-10 shadow-xl border-b-[12px] border-gold text-center hover:-translate-y-2 transition-transform duration-300">
                     <span class="bg-gold text-white px-5 py-1 rounded-full font-black text-sm mb-4 inline-block">STEP 03</span>
                     <h3 class="text-2xl font-black text-gray-800 mb-6">自院LINEの運用</h3>
-                    <p class="text-gray-600 mb-8 text-lg">公式LINEの設定や、効果的な配信方法を学びましょう。</p>
                     <a href="https://www.linebiz.com/jp/column/technique/" target="_blank" class="inline-block text-blue-600 font-black text-xl hover:text-navy underline underline-offset-8">活用ガイドを確認</a>
                 </div>
             </div>
@@ -117,7 +123,6 @@
             <div class="bg-white rounded-[2rem] p-10 shadow-xl border-l-[20px] border-indigo-700 group hover:translate-x-2 transition-transform duration-300">
                 <span class="bg-indigo-700 text-white px-5 py-1 rounded-full font-black text-sm mb-4 inline-block tracking-widest">STEP 04</span>
                 <h3 class="text-3xl font-black text-gray-800 mb-6 tracking-tight">ホームページ作成フォーム入力</h3>
-                <p class="text-xl text-gray-600 mb-10 leading-relaxed">ホームページは院の顔です。上のAIツールの生成結果を参考に、想いのこもった文章を入力してください。</p>
                 <a href="https://forms.gle/FpibsmJnu1YRHmqh8" target="_blank" class="block w-full bg-indigo-700 text-white text-center py-7 rounded-2xl font-black text-3xl hover:bg-indigo-800 transition-all shadow-xl active:scale-95">HP制作を依頼する</a>
             </div>
 
@@ -128,11 +133,10 @@
             </div>
         </div>
 
-        <!-- Footer -->
         <footer class="bg-navy text-white rounded-[3rem] p-12 md:p-16 text-center shadow-2xl relative overflow-hidden text-balance">
             <h2 class="text-4xl font-black mb-8 text-gold tracking-tight">困ったときは？</h2>
             <div class="flex justify-center relative z-10">
-                <a href="https://lin.ee/uHxvRRk" target="_blank" class="bg-gold text-navy font-black px-20 py-7 rounded-full text-3xl hover:scale-105 transition-all shadow-2xl shadow-gold/20 active:scale-95 flex items-center gap-4">
+                <a href="https://lin.ee/uHxvRRk" target="_blank" class="bg-gold text-navy font-black px-20 py-7 rounded-full text-3xl hover:scale-105 transition-all shadow-2xl active:scale-95 flex items-center gap-4">
                     <i class="fa-brands fa-line text-4xl"></i>
                     <span>LINEで相談</span>
                 </a>
@@ -151,8 +155,23 @@
     </div>
 
     <script>
-        // 管理者があらかじめ設定するAPIキー
+        // APIキー
         const apiKey = "AIzaSyAu6XKq65GwBX9DcxGNYrMeMStZ-U-VQHI"; 
+
+        // デバッグ用ログ関数
+        function addLog(msg) {
+            const debugLog = document.getElementById('debugLog');
+            const logContent = document.getElementById('logContent');
+            debugLog.classList.remove('hidden');
+            logContent.innerHTML += `> ${msg}<br>`;
+            console.log(msg);
+        }
+
+        // グローバルエラーキャッチ
+        window.onerror = function(msg, url, line) {
+            addLog(`JSエラー: ${msg} (行:${line})`);
+            return false;
+        };
 
         function copyResult() {
             const text = document.getElementById('hpResult').textContent;
@@ -162,9 +181,9 @@
             temp.select();
             try {
                 document.execCommand('copy');
-                showModal("完了", "文章をコピーしました！そのままフォームへ貼り付けてください。");
+                showModal("完了", "文章をコピーしました！");
             } catch (err) {
-                showModal("エラー", "手動で選択してコピーしてください。");
+                showModal("エラー", "コピーに失敗しました。手動で選択してコピーしてください。");
             }
             document.body.removeChild(temp);
         }
@@ -184,13 +203,19 @@
         }
 
         async function generateContent(type) {
+            addLog("生成開始ボタンが押されました");
             const btn = document.getElementById(type + 'Btn');
             const input = document.getElementById(type + 'Input').value;
             const resultDiv = document.getElementById(type + 'Result');
             const container = document.getElementById(type + 'ResultContainer');
+            const debugLog = document.getElementById('debugLog');
+            const logContent = document.getElementById('logContent');
+
+            logContent.innerHTML = ""; // ログをリセット
+            debugLog.classList.add('hidden');
 
             if (!input.trim()) {
-                showModal("入力不足", "あなたの経歴や院の強みをいくつか入力してください。");
+                showModal("入力不足", "あなたの経歴や院の強みを入力してください。");
                 return;
             }
 
@@ -199,25 +224,26 @@
             btn.disabled = true;
             container.classList.add('hidden');
 
-            const systemPrompt = "あなたは信頼感のある治療家専門のプロライターです。ユーザーが入力したキーワードや想いを元に、ホームページのプロフィール欄や院長挨拶文としてそのまま掲載できる、誠実で心に響く文章を作成してください。患者さんが「この先生なら安心だ」と思えるような、温かみのある日本語を使用し、300文字〜500文字程度で構成してください。";
+            const systemPrompt = "あなたは信頼感のある治療家専門のプロライターです。誠実で心に響く紹介文を300〜500文字程度で構成してください。";
 
             try {
-                // 最も安定している接続方法でリクエスト
+                addLog("API通信を試みます...");
                 const text = await callGemini(input, systemPrompt);
                 
                 if (text) {
+                    addLog("通信成功！回答を受信しました");
                     resultDiv.textContent = text;
                     container.classList.remove('hidden');
                     setTimeout(() => {
                         container.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }, 100);
                 } else {
+                    addLog("エラー: AIからの回答が空です");
                     throw new Error("AIからの回答が空でした。");
                 }
             } catch (error) {
-                console.error(error);
-                // 必ずエラー内容をポップアップに表示する
-                showModal("通信エラーが発生しました", "【内容】\n" + error.message + "\n\n一度ページを更新してやり直すか、数分置いてからお試しください。");
+                addLog(`エラー発生: ${error.message}`);
+                showModal("通信エラーが発生しました", "【内容】\n" + error.message + "\n\n※ボタン下の『診断ログ』を確認してください。");
             } finally {
                 btn.innerHTML = originalBtnText;
                 btn.disabled = false;
@@ -225,33 +251,35 @@
         }
 
         async function callGemini(userQuery, systemPrompt) {
-            // エラーを特定しやすくするため、接続を極限までシンプルに。
-            // モデルは最も普及しているgemini-1.5-flashを使用。
-            const model = "gemini-1.5-flash";
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+            // 最も標準的な v1 エンドポイントを使用
+            const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
             
             const payload = {
                 contents: [{
-                    parts: [{ text: `システム指示: ${systemPrompt}\n\nユーザーの入力内容: ${userQuery}` }]
+                    parts: [{ text: `命令: ${systemPrompt}\n入力: ${userQuery}` }]
                 }]
             };
 
             try {
+                addLog(`エンドポイント: ${url.split('?')[0]}`);
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
                 
+                addLog(`レスポンスステータス: ${response.status} ${response.statusText}`);
+                
                 const result = await response.json();
 
                 if (!response.ok) {
-                    const msg = result.error ? result.error.message : '不明なエラー';
-                    throw new Error(`[Code ${response.status}] ${msg}`);
+                    const msg = result.error ? result.error.message : '不明なAPIエラー';
+                    throw new Error(`[APIエラー ${response.status}] ${msg}`);
                 }
                 
                 return result.candidates?.[0]?.content?.parts?.[0]?.text;
             } catch (e) {
+                addLog(`Fetch失敗: ${e.message}`);
                 throw e;
             }
         }
