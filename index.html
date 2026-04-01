@@ -116,7 +116,7 @@
             <!-- STEP 04 -->
             <div class="bg-white rounded-[2rem] p-10 shadow-xl border-l-[20px] border-indigo-700 group hover:translate-x-2 transition-transform duration-300">
                 <span class="bg-indigo-700 text-white px-5 py-1 rounded-full font-black text-sm mb-4 inline-block tracking-widest">STEP 04</span>
-                <h3 class="text-3xl font-black text-gray-800 mb-6 tracking-tight">ホームページ作成フォーム入力</h3>
+                <h3 class="text-3xl font-black text-gray-800 mb-6 tracking-tight text-balance">ホームページ作成フォーム入力</h3>
                 <p class="text-xl text-gray-600 mb-10 leading-relaxed">ホームページは院の顔です。上のAIツールの生成結果を参考に、想いのこもった文章を入力してください。</p>
                 <a href="https://forms.gle/FpibsmJnu1YRHmqh8" target="_blank" class="block w-full bg-indigo-700 text-white text-center py-7 rounded-2xl font-black text-3xl hover:bg-indigo-800 transition-all shadow-xl active:scale-95">HP制作を依頼する</a>
             </div>
@@ -215,8 +215,7 @@
                 }
             } catch (error) {
                 console.error(error);
-                // エラーの詳細をダイアログに表示
-                showModal("通信エラーが発生しました", "【詳細メッセージ】\n" + error.message + "\n\n【解決策】\n・APIキーに制限がかかっていないか確認してください\n・Google Cloud Consoleで'Generative Language API'が有効化されているか確認してください");
+                showModal("通信エラーが発生しました", "【詳細メッセージ】\n" + error.message + "\n\n【解決策】\n・APIキーに制限がかかっていないか確認してください\n・Google AI Studioの設定でAPIキーが有効化されているか確認してください");
             } finally {
                 btn.innerHTML = originalBtnText;
                 btn.disabled = false;
@@ -224,8 +223,8 @@
         }
 
         async function callGemini(userQuery, systemPrompt, retries = 5) {
-            // モデル名とエンドポイントを最新の安定版に固定
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+            // 最も安定している v1 エンドポイントを使用
+            const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
             
             const payload = {
                 contents: [
@@ -250,7 +249,6 @@
                     const result = await response.json();
 
                     if (!response.ok) {
-                        // API側からの具体的なエラーメッセージを抽出
                         const errorDetail = result.error ? result.error.message : 'Unknown API error';
                         throw new Error(`[Status ${response.status}] ${errorDetail}`);
                     }
@@ -262,7 +260,6 @@
                     }
                 } catch (error) {
                     if (i === retries - 1) throw error;
-                    // 指数バックオフ（リトライ）
                     await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
                 }
             }
